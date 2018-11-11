@@ -47,7 +47,7 @@ def get_audio_info(audio_id):
         result = requests.get(url)
     except Exception as e:
         logging.exception(e)
-    if result:
+    if 'result' in dir():
         match = re.search(r'var html5VideoData\s*=\s*\'([\s\S]*)\';',
                           result.content)
         if match:
@@ -123,16 +123,16 @@ def download_audios(url, directory='.'):
                     break
                 except urllib2.HTTPError as e:
                     if hasattr(e, 'code'):
-                        print('错误状态码是' + str(e.code))
+                        print(u'错误状态码是' + str(e.code).decode('utf-8'))
                         if e.code == 403:
                             delay_time = delay_time + 2
                             time.sleep(1 + random.random() * delay_time)
                 except urllib2.URLError as e:
                     if hasattr(e, 'reason'):
                         # print('url 为 %', urlStr)
-                        print('错误原因是' + str(e.reason))
+                        print(u'错误原因是' + str(e.reason).decode('utf-8'))
                 except socket.timeout:
-                    print('socket超时')
+                    print(u'socket超时')
                 except OSError as e:
                     logging.exception(e)
                 except ValueError as e:

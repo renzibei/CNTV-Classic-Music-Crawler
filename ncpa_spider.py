@@ -30,8 +30,6 @@ def get_quote_url(url):
 def handle_batch(urls, parDirPath, song_set):
     global finished_num
     global total_url_nums
-    if not os.path.exists(parDirPath):
-        os.mkdir(parDirPath)
     for each_url in urls:
         new_url = get_quote_url(each_url)
         new_hash_path = './hash/' + new_url
@@ -84,7 +82,10 @@ def get_album_urls():
                         url_batch = match[i * batch_size: (i+1) * batch_size]
                     else:
                         url_batch = match[i * batch_size: batch_size]
-                    t = threading.Thread(target=handle_batch, args=(url_batch, "./music/" + site_map[k+1], site_map[k+1]), name='thread' + str(i))
+                    par_dir = "./music/" + site_map[k+1]
+                    if not os.path.exists(par_dir):
+                        os.mkdir(par_dir)
+                    t = threading.Thread(target=handle_batch, args=(url_batch, par_dir, site_map[k+1]), name='thread' + str(i))
                     thread_queue.append(t)
                 for thread in thread_queue:
                     thread.start()

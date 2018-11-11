@@ -63,12 +63,12 @@ def get_album_urls():
         pattern = r'<li\s+[^>]+>\s*<div\s+class[^>]+>\s*<a\s+href="([^"]+)"\s*[^>]*>'
         # thread_num = multiprocessing.cpu_count()
         print(u"正在下载 " + site_map[k+1])
-        thread_num = 4
+        thread_num = 8
         if not os.path.exists('./music'):
             os.mkdir('./music')
         if not os.path.exists('./hash'):
             os.mkdir('./hash')
-        if page:
+        if 'page' in dir():
             page_content = page.read().decode('utf-8')
             match = re.findall(pattern, page_content)
             if match:

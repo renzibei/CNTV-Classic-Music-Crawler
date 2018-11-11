@@ -20,7 +20,7 @@ def get_ids(url):
         result = requests.get(url)
     except Exception as e:
         logging.exception(e)
-    if result:
+    if 'result' in dir():
 
         html = result.content.decode('utf-8')
 

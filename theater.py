@@ -12,6 +12,7 @@ import agents
 import socket
 import time
 import random
+import string
 
 
 def get_ids(url):
@@ -52,6 +53,9 @@ def get_audio_info(audio_id):
         if match:
             info = json.loads(match.group(1).decode(result.encoding))
             temp_title = info.get('title', '')
+            temp_title = string.replace(temp_title, '\\', '-')
+            temp_title = string.replace(temp_title, '/', '-')
+
             while temp_title[-1] == ' ':
                 temp_title = temp_title[:-1]
             rv = {

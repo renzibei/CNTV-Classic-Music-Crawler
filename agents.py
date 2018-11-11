@@ -55,6 +55,11 @@ def get_user_agent():
     return {'User-Agent':  random.choice(user_agent) }
 
 
+# 获取User-agent的字符串
+def get_only_agent():
+    return random.choice(user_agent)
+
+
 # 获取一个桌面请求头
 def get_easy_agent():
     return {'User-Agent': user_agent[0]}

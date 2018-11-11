@@ -65,9 +65,9 @@ def get_audio_info(audio_id):
 def download_audios(url, directory='.'):
     album_title, id_list = get_ids(url)
     if album_title is None:
-        print u'无法获取到该专辑的信息'
+        print(u'无法获取到该专辑的信息')
     else:
-        print u'专辑：%s(%d)' % (album_title, len(id_list))
+        print(u'专辑：%s(%d)' % (album_title, len(id_list)) )
 
         base_dir = os.path.join(directory, album_title)
         pickle_path = os.path.join(base_dir, 'pickle.dat')
@@ -85,10 +85,10 @@ def download_audios(url, directory='.'):
             if info.get('title') is None:
                 info.update(get_audio_info(info.get('id')))
             if info.get('complete'):
-                print u'　【已完成】' + info['title']
+                print(u'　【已完成】' + info['title'])
                 continue
             else:
-                print u'　正在下载：' + info['title'],
+                print(u'　正在下载：' + info['title'])
             save_path = os.path.join(base_dir, info['title'] + '.mp3')
 
             failed_limit = 100
@@ -97,7 +97,7 @@ def download_audios(url, directory='.'):
             while failed_times > 0:
                 try:
                     request = urllib2.Request(info['url'], headers={
-                        'User-Agent': agents.get_user_agent(),
+                        'User-Agent': agents.get_only_agent(),
                         'X-Requested-With': 'ShockwaveFlash/21.0.0.242',
                         'Connection': 'keep-alive',
                         'Referer': url
@@ -115,7 +115,7 @@ def download_audios(url, directory='.'):
                     with open(save_path, 'wb') as f:
                         f.write(audio_data)
                     info['complete'] = True
-                    print u'【成功】'
+                    print(u'【成功】')
                     break
                 except urllib2.HTTPError as e:
                     if hasattr(e, 'code'):
